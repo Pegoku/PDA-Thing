@@ -2,6 +2,7 @@ const http = require('http');
 const url = require('url');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 const PORT = process.env.PORT || 3000;
 const execRoot = process.pkg ? path.dirname(process.execPath) : __dirname;
@@ -137,5 +138,24 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Servidor escuchando en http://0.0.0.0:${PORT}`);
+  const nets = os.networkInterfaces();
+  const endpoints = new Set();
+
+  Object.values(nets).forEach((iface = []) => {
+    iface.forEach((addr) => {
+      if (!addr || addr.internal) return;
+      if (addr.family === 'IPv4') {
+        endpoints.add(`http://${addr.address}:${PORT}`);
+      } else if (addr.family === 'IPv6') {
+        endpoints.add(`http://[${addr.address}]:${PORT}`);
+      }
+    });
+  });
+
+  // Always include loopback and wildcard for clarity
+  endpoints.add(`http://127.0.0.1:${PORT}`);
+  endpoints.add(`http://0.0.0.0:${PORT}`);
+
+  console.log('Servidor escuchando en:');
+  Array.from(endpoints).forEach((url) => console.log(`  ${url}`));
 });
