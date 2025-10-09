@@ -4,7 +4,8 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
-const valoresPath = path.resolve(__dirname, 'valores.txt');
+const execRoot = process.pkg ? path.dirname(process.execPath) : __dirname;
+const valoresPath = path.resolve(execRoot, 'valores.txt');
 const publicDir = path.resolve(__dirname, 'public');
 
 function sendJson(res, statusCode, payload) {

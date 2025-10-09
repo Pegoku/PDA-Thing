@@ -11,10 +11,9 @@
     "node": ">=16"
   },
   "pkg": {
-  "assets": [
-    "public/**/*",
-    "manifest.webmanifest"
-  ]
-}
-
+    "assets": [
+      "public/**/*",
+      "public/manifest.webmanifest"
+    ]
+  }
 }
