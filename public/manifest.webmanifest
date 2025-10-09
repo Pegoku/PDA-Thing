@@ -1,6 +1,6 @@
 {
-  "name": "PDA Add Item",
-  "short_name": "PDA Items",
+  "name": "PDA Inventario",
+  "short_name": "PDA",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

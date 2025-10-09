@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>PDA Add Item</title>
+    <title>PDA Añadir Artículo</title>
     <meta name="theme-color" content="#111111" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -18,26 +18,26 @@
     <main class="container">
       <section id="buffer-card" class="card buffer-card" aria-live="polite">
         <header class="buffer-header">
-          <h2>Pending items</h2>
+          <h2>Artículos pendientes</h2>
           <div class="buffer-actions">
             <button type="button" id="send-all-btn" class="primary">
-              Send all
+              Enviar todo
             </button>
-            <button type="button" id="clear-all-btn">Clear</button>
+            <button type="button" id="clear-all-btn">Limpiar</button>
           </div>
         </header>
         <div class="buffer-table-wrapper">
           <table id="buffer-table">
             <thead>
               <tr>
-                <th scope="col">Code</th>
-                <th scope="col">Qty</th>
-                <th scope="col" class="actions-col">Actions</th>
+                <th scope="col">Código</th>
+                <th scope="col">Cant.</th>
+                <th scope="col" class="actions-col">Acciones</th>
               </tr>
             </thead>
             <tbody id="buffer-tbody">
               <tr class="empty-row">
-                <td colspan="3">No items yet</td>
+                <td colspan="3">Sin artículos</td>
               </tr>
             </tbody>
           </table>
@@ -45,31 +45,31 @@
       </section>
 
       <form id="add-form" class="card form-card" autocomplete="off">
-        <span id="mode-label" class="mode-indicator" aria-live="polite">Adding</span>
-        <label for="code">Item code</label>
+        <span id="mode-label" class="mode-indicator" aria-live="polite">Añadiendo</span>
+        <label for="code">Código del artículo</label>
         <input
           type="text"
           id="code"
           name="code"
           inputmode="text"
-          placeholder="e.g. ABC123"
+          placeholder="p. ej. ABC123"
           autocomplete="off"
           spellcheck="false"
           disabled
         />
 
-        <label for="qtty">Quantity</label>
+        <label for="qtty">Cantidad</label>
         <input
           type="number"
           id="qtty"
           name="qtty"
           inputmode="numeric"
           pattern="[0-9]*"
-          placeholder="e.g. 5"
+          placeholder="p. ej. 5"
           value="1"
         />
 
-        <button type="submit" class="primary" id="save-btn">Add</button>
+        <button type="submit" class="primary" id="save-btn">Agregar</button>
 
         <!-- <div id="result" role="status" aria-live="polite"></div> -->
 
@@ -78,8 +78,8 @@
     </main>
     
     <div id="fullscreen-banner" class="fullscreen-banner hidden" role="dialog" aria-live="polite">
-      <p>This app can run fullscreen.</p>
-      <button type="button" id="enter-fullscreen-btn" class="primary">Enter fullscreen</button>
+      <p>Esta aplicación puede mostrarse a pantalla completa.</p>
+      <button type="button" id="enter-fullscreen-btn" class="primary">Abrir en pantalla completa</button>
     </div>
 
     <div id="popup-message" class="popup-message hidden" role="status" aria-live="assertive"></div>

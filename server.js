@@ -90,7 +90,7 @@ const server = http.createServer(async (req, res) => {
     // Fallback: brief message
     return sendJson(res, 200, {
       ok: true,
-      message: 'Use /addItem?code=ITEM&qtty=QTTY to append to valores.txt',
+      message: 'Usa /addItem?code=ITEM&qtty=QTTY para agregar a valores.txt',
     });
   }
 
@@ -107,21 +107,21 @@ const server = http.createServer(async (req, res) => {
     const qttyNum = Number(qttyRaw);
 
     if (!code) {
-      return sendJson(res, 400, { ok: false, error: 'Missing or empty "code" parameter' });
+      return sendJson(res, 400, { ok: false, error: 'Falta el parámetro "code" o está vacío' });
     }
     if (!Number.isFinite(qttyNum)) {
-      return sendJson(res, 400, { ok: false, error: 'Missing or invalid "qtty" parameter' });
+      return sendJson(res, 400, { ok: false, error: 'Falta el parámetro "qtty" o no es válido' });
     }
 
     const line = `${code}|${qttyNum}\n`;
-    console.log(`Appending to valores.txt: ${line.trim()}`);
+    console.log(`Agregando a valores.txt: ${line.trim()}`);
 
     try {
       await fs.promises.appendFile(valoresPath, line, 'utf8');
       return sendJson(res, 200, { ok: true, written: line.trim() });
     } catch (err) {
-      console.error('Failed to append to valores.txt:', err);
-      return sendJson(res, 500, { ok: false, error: 'Failed to write to valores.txt' });
+      console.error('No se pudo agregar a valores.txt:', err);
+      return sendJson(res, 500, { ok: false, error: 'No se pudo escribir en valores.txt' });
     }
   }
 
@@ -132,9 +132,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   // Not found
-  sendJson(res, 404, { ok: false, error: 'Not found' });
+  sendJson(res, 404, { ok: false, error: 'No encontrado' });
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server listening on http://0.0.0.0:${PORT}`);
+  console.log(`Servidor escuchando en http://0.0.0.0:${PORT}`);
 });

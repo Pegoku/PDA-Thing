@@ -224,8 +224,8 @@ if ('serviceWorker' in navigator) {
   }
 
   function setMode(mode) {
-    modeLabel.textContent = mode;
-    saveBtn.textContent = mode === 'Editing' ? 'Save' : 'Add';
+    modeLabel.textContent = mode === 'Editing' ? 'Editando' : 'Añadiendo';
+    saveBtn.textContent = mode === 'Editing' ? 'Guardar' : 'Agregar';
   }
 
   function focusCodeField(selectAll) {
@@ -263,7 +263,7 @@ if ('serviceWorker' in navigator) {
     if (!buffer.length) {
       bufferTbody.innerHTML = `
         <tr class="empty-row">
-          <td colspan="3">No items yet</td>
+          <td colspan="3">Sin artículos</td>
         </tr>`;
     } else {
       bufferTbody.innerHTML = buffer
@@ -273,7 +273,7 @@ if ('serviceWorker' in navigator) {
               <td>${escapeHtml(item.code)}</td>
               <td>${item.qtty}</td>
               <td class="actions-col">
-                <button type="button" data-action="edit" data-index="${idx}">Edit</button>
+                <button type="button" data-action="edit" data-index="${idx}">Editar</button>
               </td>
             </tr>`
         )
@@ -447,7 +447,7 @@ if ('serviceWorker' in navigator) {
 
     isSending = true;
     setActionButtonsState();
-    setResult(true, `Sending ${buffer.length} item${buffer.length > 1 ? 's' : ''}...`);
+    setResult(true, `Enviando ${buffer.length} artículo${buffer.length === 1 ? '' : 's'}...`);
 
     try {
       for (let i = 0; i < buffer.length; i += 1) {
@@ -459,11 +459,11 @@ if ('serviceWorker' in navigator) {
       renderBuffer();
       exitEditMode();
       resetForm();
-      const successMessage = `Sent ${sentCount} item${sentCount > 1 ? 's' : ''}`;
+      const successMessage = `Se enviaron ${sentCount} artículo${sentCount === 1 ? '' : 's'}`;
       setResult(true, successMessage);
       showPopup(successMessage);
     } catch (err) {
-      let message = String(err && err.message ? err.message : 'Send failed');
+      let message = String(err && err.message ? err.message : 'Error al enviar');
       try {
         const parsed = JSON.parse(message);
         if (parsed && parsed.error) {
@@ -472,7 +472,7 @@ if ('serviceWorker' in navigator) {
       } catch (_) {
         // ignore JSON parse error, keep the original message
       }
-      setResult(false, `Send failed: ${message}`);
+      setResult(false, `Error al enviar: ${message}`);
     } finally {
       isSending = false;
       renderBuffer();
@@ -482,14 +482,14 @@ if ('serviceWorker' in navigator) {
 
   clearAllBtn.addEventListener('click', () => {
     if (!buffer.length || isSending) {
-      setResult(false, 'Buffer already empty');
+      setResult(false, 'La lista ya está vacía');
       return;
     }
     buffer.length = 0;
     renderBuffer();
     exitEditMode();
     resetForm();
-    const message = 'Cleared all buffered items';
+    const message = 'Se vació la lista de artículos';
     setResult(true, message);
     showPopup(message);
   });
