@@ -6,7 +6,7 @@ const path = require('path');
 const PORT = process.env.PORT || 3000;
 const execRoot = process.pkg ? path.dirname(process.execPath) : __dirname;
 const valoresPath = path.resolve(execRoot, 'valores.txt');
-const publicDir = path.resolve(__dirname, 'public');
+const publicDir = process.pkg ? path.resolve(execRoot, 'public') : path.resolve(__dirname, 'public');
 
 function sendJson(res, statusCode, payload) {
   const body = JSON.stringify(payload);
