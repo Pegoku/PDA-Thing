@@ -45,9 +45,14 @@ function getContentType(filePath) {
 
 async function tryServeStatic(pathname, res) {
   try {
-    // Prevent path traversal
-    const safePath = path.normalize(path.join(publicDir, pathname));
-    if (!safePath.startsWith(publicDir)) throw new Error('Invalid path');
+    // Normalize incoming pathname and strip leading slashes so path.join keeps publicDir as the base
+    const relPath = String(pathname || '').replace(/^\/+/, '') || 'index.html';
+    const candidate = path.join(publicDir, relPath);
+    const safePath = path.resolve(candidate);
+
+    // Use path.relative to ensure the resolved path stays inside publicDir
+    const relative = path.relative(publicDir, safePath);
+    if (relative.startsWith('..') || path.isAbsolute(relative)) throw new Error('Invalid path');
 
     let filePath = safePath;
     const stat = await fs.promises.stat(filePath).catch(() => null);
@@ -130,6 +135,6 @@ const server = http.createServer(async (req, res) => {
   sendJson(res, 404, { ok: false, error: 'Not found' });
 });
 
-server.listen(PORT, () => {
-  console.log(`Server listening on http://localhost:${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server listening on http://0.0.0.0:${PORT}`);
 });

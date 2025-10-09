@@ -1,30 +1,89 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PDA Add Item</title>
-  <meta name="theme-color" content="#ffffff" />
-  <link rel="manifest" href="/manifest.webmanifest" />
-  <link rel="stylesheet" href="/styles.css" />
-</head>
-<body>
-  <main class="container">
-    <h1>PDA Add Item</h1>
-    <form id="add-form" class="card" autocomplete="off">
-      <label for="code">Item code</label>
-      <input type="text" id="code" name="code" inputmode="text" placeholder="e.g. ABC123" required />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PDA Add Item</title>
+    <meta name="theme-color" content="#111111" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" sizes="192x192" href="/icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section id="buffer-card" class="card buffer-card" aria-live="polite">
+        <header class="buffer-header">
+          <h2>Pending items</h2>
+          <div class="buffer-actions">
+            <button type="button" id="send-all-btn" class="primary">
+              Send all
+            </button>
+            <button type="button" id="clear-all-btn">Clear</button>
+          </div>
+        </header>
+        <div class="buffer-table-wrapper">
+          <table id="buffer-table">
+            <thead>
+              <tr>
+                <th scope="col">Code</th>
+                <th scope="col">Qty</th>
+                <th scope="col" class="actions-col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="buffer-tbody">
+              <tr class="empty-row">
+                <td colspan="3">No items yet</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-      <label for="qtty">Quantity</label>
-        <input type="number" id="qtty" name="qtty" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 5" value="1" />
+      <form id="add-form" class="card form-card" autocomplete="off">
+        <span id="mode-label" class="mode-indicator" aria-live="polite">Adding</span>
+        <label for="code">Item code</label>
+        <input
+          type="text"
+          id="code"
+          name="code"
+          inputmode="text"
+          placeholder="e.g. ABC123"
+          autocomplete="off"
+          spellcheck="false"
+          disabled
+        />
 
-      <button type="submit" class="primary">Add</button>
-    </form>
+        <label for="qtty">Quantity</label>
+        <input
+          type="number"
+          id="qtty"
+          name="qtty"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          placeholder="e.g. 5"
+          value="1"
+        />
 
-    <div id="result" role="status" aria-live="polite"></div>
+        <button type="submit" class="primary" id="save-btn">Add</button>
 
-  </main>
+        <!-- <div id="result" role="status" aria-live="polite"></div> -->
 
-  <script src="/app.js"></script>
-</body>
+      </form>
+
+    </main>
+    
+    <div id="fullscreen-banner" class="fullscreen-banner hidden" role="dialog" aria-live="polite">
+      <p>This app can run fullscreen.</p>
+      <button type="button" id="enter-fullscreen-btn" class="primary">Enter fullscreen</button>
+    </div>
+
+    <div id="popup-message" class="popup-message hidden" role="status" aria-live="assertive"></div>
+
+    <script src="/app.js"></script>
+  </body>
 </html>
