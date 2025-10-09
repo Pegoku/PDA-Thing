@@ -1,4 +1,4 @@
-# PDA Thing - Simple API + UI
+# PDA barcode reader helper 
 
 This is a tiny Node.js server with a single endpoint that appends lines to `valores.txt` in the format:
 
@@ -6,6 +6,8 @@ This is a tiny Node.js server with a single endpoint that appends lines to `valo
 Item|Qtty
 Item|Qtty
 ```
+
+This was designed to work with a PDA device that scans barcodes and sends the data via the simple web interface.
 
 ## Run
 
