@@ -1,0 +1,13 @@
+{
+  "name": "pda-thing-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Simple Node.js API with /addItem endpoint that appends to valores.txt",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}
