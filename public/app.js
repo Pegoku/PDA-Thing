@@ -455,7 +455,29 @@ if ('serviceWorker' in navigator) {
     setResult(true, `Enviando ${buffer.length} artículo${buffer.length === 1 ? '' : 's'}...`);
 
     try {
-      currentDate = Date.now();
+      // Wait for server time before sending. currentDate will be a Number or null.
+      const currentDate = await fetch('/getTime', {
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('No se pudo obtener la hora del servidor');
+          }
+          return res.json();
+        })
+        .then((data) => {
+          if (data && data.ok && Number.isFinite(data.serverTime)) {
+            return Number(data.serverTime);
+          }
+          throw new Error('Respuesta inválida al obtener la hora del servidor');
+        })
+        .catch((err) => {
+          console.warn('Error fetching server time, using local time', err);
+          showPopup('No se pudo sincronizar con el servidor, pruebe mas tarde.');
+          return null;
+        });
+
       for (let i = 0; i < buffer.length; i += 1) {
         const entry = buffer[i];
         await addItem(entry.code, entry.qtty, currentDate);
