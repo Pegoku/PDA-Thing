@@ -214,8 +214,8 @@ if ('serviceWorker' in navigator) {
       .join('&');
   }
 
-  async function addItem(code, qtty) {
-    const query = toQuery({ code: normalizeCodeValue(code), qtty: String(qtty).trim() });
+  async function addItem(code, qtty, date) {
+    const query = toQuery({ code: normalizeCodeValue(code), qtty: String(qtty).trim(), date: String(date).trim() });
     const url = `/addItem?${query}`;
     const res = await fetch(url, {
       method: 'GET',
@@ -455,9 +455,10 @@ if ('serviceWorker' in navigator) {
     setResult(true, `Enviando ${buffer.length} artículo${buffer.length === 1 ? '' : 's'}...`);
 
     try {
+      currentDate = Date.now();
       for (let i = 0; i < buffer.length; i += 1) {
         const entry = buffer[i];
-        await addItem(entry.code, entry.qtty);
+        await addItem(entry.code, entry.qtty, currentDate);
       }
       const sentCount = buffer.length;
       buffer.length = 0;

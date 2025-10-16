@@ -92,7 +92,7 @@ const server = http.createServer(async (req, res) => {
     // Fallback: brief message
     return sendJson(res, 200, {
       ok: true,
-      message: 'Usa /addItem?code=ITEM&qtty=QTTY para agregar a valores.txt',
+      message: 'Usa /addItem?code=ITEM&qtty=QTTY&date=DATE para agregar a valores.txt',
     });
   }
 
@@ -104,9 +104,11 @@ const server = http.createServer(async (req, res) => {
   if (req.method === 'GET' && pathname === '/addItem') {
     const codeRaw = query.code;
     const qttyRaw = query.qtty;
+    const dateRaw = query.date;
 
     const code = sanitizeCode(codeRaw);
     const qttyNum = Number(qttyRaw);
+    const dateNum = dateRaw ? Number(dateRaw) : Date.now();
 
     if (!code) {
       return sendJson(res, 400, { ok: false, error: 'Falta el parámetro "code" o está vacío' });
@@ -114,11 +116,24 @@ const server = http.createServer(async (req, res) => {
     if (!Number.isFinite(qttyNum)) {
       return sendJson(res, 400, { ok: false, error: 'Falta el parámetro "qtty" o no es válido' });
     }
+    
+    if (!Number.isFinite(dateNum) || dateNum <= 0) {
+      return sendJson(res, 400, { ok: false, error: 'El parámetro "date" no es válido' });
+    }
 
-    const line = `${code}|${qttyNum}\n`;
+    const line = `${code}|${qttyNum}|${dateNum}\n`;
     console.log(`Agregando a valores.txt: ${line.trim()}`);
 
     try {
+      fs.readFile(valoresPath, 'utf8', function (err, data) {
+        var lines = data.trim().split('\n');
+        var lastLine = lines.slice(-1)[0];
+        var lastDate = lastLine.split('|')[2];
+        var currentDate = Date.now();
+        if (currentDate - lastDate < 2000) {
+          console.log(`Limpiando ${valoresPath}`);
+        }
+      });
       await fs.promises.appendFile(valoresPath, line, 'utf8');
       return sendJson(res, 200, { ok: true, written: line.trim() });
     } catch (err) {

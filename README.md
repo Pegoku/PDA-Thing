@@ -31,13 +31,13 @@ It provides a simple, mobile-friendly form to submit item code and quantity. It 
 Alternatively, append an item using a GET request directly:
 
 ```
-GET /addItem?code=ABC123&qtty=5
+GET /addItem?code=ABC123&qtty=5&date=1234567890
 ```
 
 Example using curl:
 
 ```sh
-curl "http://localhost:3000/addItem?code=ABC123&qtty=5"
+curl "http://localhost:3000/addItem?code=ABC123&qtty=5&date=1234567890"
 ```
 
 This will append a line to `valores.txt`:
@@ -49,6 +49,7 @@ ABC123|5
 Notes:
 - `code` is treated as a string. Pipes (`|`) and newlines are sanitized.
 - `qtty` is parsed as a number.
+- `date` is an optional parameter representing a timestamp in milliseconds. If not provided, the current timestamp is used.
 - File path: `valores.txt` in the same directory as `server.js`.
 
 ### Notes for deployment
