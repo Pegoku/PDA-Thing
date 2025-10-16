@@ -257,8 +257,11 @@ if ('serviceWorker' in navigator) {
 
   function setActionButtonsState() {
     const empty = buffer.length === 0;
-    sendAllBtn.disabled = empty || isSending;
-    clearAllBtn.disabled = empty || isSending;
+    const disableActions = empty || isSending;
+    sendAllBtn.disabled = disableActions;
+    clearAllBtn.disabled = disableActions;
+    sendAllBtn.classList.toggle('disabled', disableActions);
+    clearAllBtn.classList.toggle('disabled', disableActions);
     saveBtn.disabled = isSending;
     // codeEl.disabled = isSending;
     qttyEl.disabled = isSending;
@@ -373,6 +376,7 @@ if ('serviceWorker' in navigator) {
 
     renderBuffer();
     resetForm();
+
   });
 
   bufferTbody.addEventListener('click', (event) => {

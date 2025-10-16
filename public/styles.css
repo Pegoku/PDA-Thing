@@ -96,6 +96,20 @@ button.primary {
 button.primary:hover {
   background: #1e55d1;
 }
+button:disabled,
+button.disabled {
+  background: #e4e4e4;
+  border-color: #d2d2d2;
+  color: #a0a0a0;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+button.primary:disabled,
+button.primary.disabled {
+  background: #c7d2fe;
+  border-color: #a5b4fc;
+  color: #f4f4f5;
+}
 .hidden {
   display: none !important;
 }
