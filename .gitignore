@@ -1,1 +1,5 @@
 valores.txt
+dist/
+node_modules/
+*.exe
+*.bin

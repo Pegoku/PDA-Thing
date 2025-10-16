@@ -29,12 +29,16 @@ jobs:
 
       - name: Install dependencies
         run: npm install --production
+      
+      - name: Create dist directory
+        run: mkdir -p dist
           
       - name: Package into node binary
         uses: lando/pkg-action@v6.0.0
         with:
           entrypoint: server.js
-          filename: pda-thing
+          filename: server
+          output-path: dist
           arch: ${{ matrix.arch }}
           node-version: ${{ matrix.node-version }}
           os: ${{ matrix.os }}
