@@ -43,7 +43,7 @@ curl "http://localhost:3000/addItem?code=ABC123&qtty=5&date=1234567890"
 This will append a line to `valores.txt`:
 
 ```
-ABC123|5
+ABC123|5|1234567890
 ```
 
 Notes:
