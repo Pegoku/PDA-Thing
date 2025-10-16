@@ -47,6 +47,11 @@ if ('serviceWorker' in navigator) {
     });
   }
 
+  form.onsubmit = function (e) {
+    e.preventDefault();
+    qttyEl.blur();
+  };
+
   function normalizeCodeValue(value) {
     const sanitized = String(value || '')
       .replace(/[\r\n\t]+/g, ' ')
