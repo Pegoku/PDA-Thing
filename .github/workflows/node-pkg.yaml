@@ -22,11 +22,19 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Prepare dist directory
+        run: |
+          rm -rf dist
+          mkdir -p dist
+
       - name: Build Windows executable
-        run: npx pkg -t node18-win-x64 server.js
+        run: npx pkg server.js --targets node18-win-x64 --output dist/server.exe --config package.json
+
+      - name: Copy static assets next to executable
+        run: cp -r public dist/public
 
       - name: Upload executable artifact
         uses: actions/upload-artifact@v4
         with:
           name: server-win-x64
-          path: server.exe
+          path: dist
